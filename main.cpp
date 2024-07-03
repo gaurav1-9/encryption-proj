@@ -1,50 +1,56 @@
-#include<iostream>
-#include<string>
+#include <iostream>
+#include <string>
 using namespace std;
 
 class RawString{
 private:
     bool isConverted = false;
+
 protected:
     string rawString;
     int stringLength;
+
 public:
-    RawString(string rawString){
+    RawString(string rawString)
+    {
         this->rawString = rawString;
         this->stringLength = rawString.length();
-        toLower();
-    }
-    void toLower(){
-        for(int i=0;i<stringLength;i++){
-            if(rawString[i] == ' ') continue;
-            else{
-                if(rawString[i]>=65 && rawString[i]<=90){
-                    rawString[i] = rawString[i]+32;
-                    isConverted = true;
-                }
-            }
-        }
-        if(isConverted) cout<<endl<<"Input string converted to lower case"<<endl;
     }
 };
+
 class CeasarCipher : protected RawString{
 public:
-    CeasarCipher(string rawString):RawString(rawString){}
+    CeasarCipher(string rawString) : RawString(rawString) {}
 
-    void ceasarCipherAlgo(){
-        for(int i=0;i<stringLength;i++){
-            if(rawString[i] == ' ') continue;
-            else cout<<(int)rawString[i]<<endl;
+    void ceasarCipherAlgo()
+    {
+        cout << "\nCEASAR CIPHER ENCRYPTION VALUE" << endl;
+        for (int i = 0; i < stringLength; i++)
+        {
+            if (rawString[i] == ' ')
+                cout << " ";
+
+            //Lower case
+            else if (rawString[i] >= 97 && rawString[i] <= 122)
+                cout << (char)((((int)rawString[i] - 97 + 3) % 26) + 97);
+
+            //Upper case
+            else if (rawString[i] >= 65 && rawString[i] <= 90)
+                cout << (char)((((int)rawString[i] - 65 + 3) % 26) + 65);
+            else cout<<"_";
         }
     }
 };
 
 int main(){
     string input;
-    getline(cin,input);
+    getline(cin, input);
+
+    cout << endl
+         << "INPUT STRING: " << input << endl;
 
     CeasarCipher cc(input);
     cc.ceasarCipherAlgo();
-    
+
     return 0;
 }
