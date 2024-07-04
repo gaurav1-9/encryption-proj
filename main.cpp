@@ -3,9 +3,6 @@
 using namespace std;
 
 class RawString{
-private:
-    bool isConverted = false;
-
 protected:
     string rawString;
     int stringLength;
@@ -20,11 +17,14 @@ public:
 
 class CeasarCipher : protected RawString{
 public:
-    CeasarCipher(string rawString) : RawString(rawString) {}
+    CeasarCipher(string rawString) : RawString(rawString) {
+        cout << "\nCEASAR CIPHER ENCRYPTION VALUE" << endl;
+        ceasarCipherAlgo();
+        cout<<endl;
+    }
 
     void ceasarCipherAlgo()
     {
-        cout << "\nCEASAR CIPHER ENCRYPTION VALUE" << endl;
         for (int i = 0; i < stringLength; i++)
         {
             if (rawString[i] == ' ')
@@ -42,6 +42,24 @@ public:
     }
 };
 
+class RailFence : protected RawString{
+private:
+    string noSpaceStr;
+    int depth = 3,col;
+public:
+    RailFence(string rawString) : RawString(rawString) {
+        cout << "\nRAILFENCE CIPHER ENCRYPTION VALUE" << endl;
+        spaceRemover();
+    }
+
+    void spaceRemover(){
+        for(int i=0;i<rawString.length();i++){
+            if(rawString[i]!=' ')
+            noSpaceStr+=rawString[i];
+        }
+    }
+};
+
 int main(){
     string input;
     getline(cin, input);
@@ -50,7 +68,8 @@ int main(){
          << "INPUT STRING: " << input << endl;
 
     CeasarCipher cc(input);
-    cc.ceasarCipherAlgo();
+
+    RailFence rf(input);
 
     return 0;
 }
