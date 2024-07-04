@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 
 class RawString{
@@ -40,16 +41,23 @@ public:
             else cout<<"_";
         }
     }
+    ~CeasarCipher(){}
 };
 
 class RailFence : protected RawString{
 private:
     string noSpaceStr;
-    int depth = 3,col;
+    int depth = 3,col,count=0;
+    vector<vector<char>> railfenceMatrix;
 public:
+
     RailFence(string rawString) : RawString(rawString) {
         cout << "\nRAILFENCE CIPHER ENCRYPTION VALUE" << endl;
         spaceRemover();
+        setColValue();
+        railfenceMatrix.resize(depth,vector<char>(col,'\0'));
+        setMatrix();
+        railfenceEncryptionValue();
     }
 
     void spaceRemover(){
@@ -58,6 +66,29 @@ public:
             noSpaceStr+=rawString[i];
         }
     }
+    void setColValue(){
+        if(noSpaceStr.length()%3 != 0) 
+            col = (noSpaceStr.length()/3)+1;
+        else col = noSpaceStr.length()/3;
+    }
+    void setMatrix(){
+        for(int i=0;i<col;i++){
+            for(int j=0;j<depth;j++){
+                if(noSpaceStr.length()>count){
+                    railfenceMatrix[j][i] = noSpaceStr[count];
+                    count++;
+                }
+            }
+        }
+    }
+    void railfenceEncryptionValue(){
+        for(int i=0;i<depth;i++){
+            for(int j=0;j<col;j++){
+                cout<<railfenceMatrix[i][j];
+            }
+        }
+    }
+    ~RailFence(){}
 };
 
 int main(){
@@ -68,7 +99,6 @@ int main(){
          << "INPUT STRING: " << input << endl;
 
     CeasarCipher cc(input);
-
     RailFence rf(input);
 
     return 0;
