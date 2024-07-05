@@ -5,7 +5,7 @@ using namespace std;
 
 class RawString{
 protected:
-    string rawString;
+    string rawString,noSpaceStr;
     int stringLength;
 
 public:
@@ -13,6 +13,12 @@ public:
     {
         this->rawString = rawString;
         this->stringLength = rawString.length();
+    }
+    void spaceRemover(){
+        for(int i=0;i<rawString.length();i++){
+            if(rawString[i]!=' ')
+            noSpaceStr+=rawString[i];
+        }
     }
 };
 
@@ -46,7 +52,6 @@ public:
 
 class RailFence : protected RawString{
 private:
-    string noSpaceStr;
     int depth = 3,col,count=0;
     vector<vector<char>> railfenceMatrix;
 public:
@@ -60,12 +65,7 @@ public:
         railfenceEncryptionValue();
     }
 
-    void spaceRemover(){
-        for(int i=0;i<rawString.length();i++){
-            if(rawString[i]!=' ')
-            noSpaceStr+=rawString[i];
-        }
-    }
+    
     void setColValue(){
         col = noSpaceStr.length();
     }
