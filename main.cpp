@@ -105,6 +105,12 @@ public:
     ~RailFence(){}
 };
 
+class PlaiFair : protected RawString{
+private:
+
+public:
+};
+
 int main(){
     string input;
     getline(cin, input);
