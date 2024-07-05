@@ -107,14 +107,30 @@ public:
 class PlayFair : protected RawString{
 private:
     char keyMatrix[5][5];
-    string keyString = "monarchy",remainingKeyString = "bdefgiklpqstuvwxz";
-
+    string keyString = "monarchy",remainingKeyString = "bdefgiklpqstuvwxz",playfairStr;
+    int subStrings;
 
 public:
     PlayFair(string rawString):RawString(rawString){
         spaceRemover();
         generateKey();
         showKey();
+        subStringCalculations();
+    }
+    void subStringCalculations(){
+        int count, changed = 0;
+        playfairStr = noSpaceStr;
+        for(int i=1;i<noSpaceStr.length();i++){
+            count =i;
+            if(noSpaceStr[i]==noSpaceStr[i-1]) {
+                if(changed) count=count+changed;
+                changed ++;
+                playfairStr.insert(count,"x");
+            }
+        }
+        if(playfairStr.length()%2!=0) playfairStr.push_back('x');
+        subStrings = playfairStr.length()/2;
+        cout<<playfairStr<<endl<<subStrings;
     }
 
     void generateKey(){
