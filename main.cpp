@@ -100,7 +100,6 @@ public:
             for(int j=0;j<col;j++){
                 cout<<railfenceMatrix[i][j];
             }
-            cout<<endl;
         }
     }
     ~RailFence(){}
