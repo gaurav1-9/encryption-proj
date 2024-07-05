@@ -55,7 +55,7 @@ public:
         cout << "\nRAILFENCE CIPHER ENCRYPTION VALUE" << endl;
         spaceRemover();
         setColValue();
-        railfenceMatrix.resize(depth,vector<char>(col,'*'));
+        railfenceMatrix.resize(depth,vector<char>(col,'\0'));
         setMatrix();
         railfenceEncryptionValue();
     }
@@ -98,7 +98,6 @@ public:
     void railfenceEncryptionValue(){
         for(int i=0;i<depth;i++){
             for(int j=0;j<col;j++){
-                if(i==j)
                 cout<<railfenceMatrix[i][j];
             }
             cout<<endl;
