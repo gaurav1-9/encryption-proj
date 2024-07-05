@@ -15,9 +15,8 @@ public:
         this->stringLength = rawString.length();
     }
     void spaceRemover(){
-        for(int i=0;i<rawString.length();i++){
-            if(rawString[i]!=' ')
-            noSpaceStr+=rawString[i];
+        for(char c:rawString){
+            if(c!=' ') noSpaceStr+=c;
         }
     }
 };
@@ -107,8 +106,14 @@ public:
 
 class PlaiFair : protected RawString{
 private:
+    char keyMatrix[5][5];
 
 public:
+    void generateKey(){
+        for(int i=0;i<5;i++){
+            for(int j=0;j<5;j++){}
+        }
+    }
 };
 
 int main(){
