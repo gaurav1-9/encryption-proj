@@ -104,14 +104,39 @@ public:
     ~RailFence(){}
 };
 
-class PlaiFair : protected RawString{
+class PlayFair : protected RawString{
 private:
     char keyMatrix[5][5];
+    string keyString = "monarchy",remainingKeyString = "bdefgiklpqstuvwxz";
+
 
 public:
+    PlayFair(string rawString):RawString(rawString){
+        spaceRemover();
+        generateKey();
+        showKey();
+    }
+
     void generateKey(){
+        int count =0;
         for(int i=0;i<5;i++){
-            for(int j=0;j<5;j++){}
+            for(int j=0;j<5;j++){
+                if(count<keyString.length()){
+                    keyMatrix[i][j] = keyString[count];
+                }
+                else {
+                    keyMatrix[i][j] = remainingKeyString[count-keyString.length()];
+                }
+                count++;
+            }
+        }
+    }
+    void showKey(){
+        for(int i=0;i<5;i++){
+            for(int j=0;j<5;j++){
+                cout<<keyMatrix[i][j]<<" ";
+            }
+            cout<<endl;
         }
     }
 };
@@ -123,8 +148,9 @@ int main(){
     cout << endl
          << "INPUT STRING: " << input << endl;
 
-    CeasarCipher cc(input);
-    RailFence rf(input);
+    // CeasarCipher cc(input);
+    // RailFence rf(input);
+    PlayFair pf(input);
 
     return 0;
 }
