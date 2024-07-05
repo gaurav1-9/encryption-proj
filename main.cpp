@@ -55,7 +55,7 @@ public:
         cout << "\nRAILFENCE CIPHER ENCRYPTION VALUE" << endl;
         spaceRemover();
         setColValue();
-        railfenceMatrix.resize(depth,vector<char>(col,'\0'));
+        railfenceMatrix.resize(depth,vector<char>(col,'*'));
         setMatrix();
         railfenceEncryptionValue();
     }
@@ -67,25 +67,41 @@ public:
         }
     }
     void setColValue(){
-        if(noSpaceStr.length()%3 != 0) 
-            col = (noSpaceStr.length()/3)+1;
-        else col = noSpaceStr.length()/3;
+        col = noSpaceStr.length();
     }
     void setMatrix(){
+        int a=0;
+        bool inc = true;
         for(int i=0;i<col;i++){
             for(int j=0;j<depth;j++){
-                if(noSpaceStr.length()>count){
+                if(noSpaceStr.length()>count && a==j){
                     railfenceMatrix[j][i] = noSpaceStr[count];
                     count++;
                 }
+            }
+            if(inc){
+                if(a==2){ 
+                    inc = false;
+                    a--;
+                }
+                else a++;
+            }
+            else{
+                if(a==0){
+                    inc = true;
+                    a++;
+                }
+                else a--;
             }
         }
     }
     void railfenceEncryptionValue(){
         for(int i=0;i<depth;i++){
             for(int j=0;j<col;j++){
+                if(i==j)
                 cout<<railfenceMatrix[i][j];
             }
+            cout<<endl;
         }
     }
     ~RailFence(){}
