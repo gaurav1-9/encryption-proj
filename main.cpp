@@ -51,20 +51,20 @@ public:
 
 class RailFence : protected RawString{
 private:
+    string railfenceCipherText;
     int depth = 3,col,count=0;
     vector<vector<char>> railfenceMatrix;
 public:
 
     RailFence(string rawString) : RawString(rawString) {
-        cout << "\nRAILFENCE CIPHER ENCRYPTION VALUE" << endl;
         spaceRemover();
         setColValue();
         railfenceMatrix.resize(depth,vector<char>(col,'\0'));
         setMatrix();
+        railfenceEncryption();
         railfenceEncryptionValue();
     }
 
-    
     void setColValue(){
         col = noSpaceStr.length();
     }
@@ -94,12 +94,16 @@ public:
             }
         }
     }
-    void railfenceEncryptionValue(){
+    void railfenceEncryption(){
         for(int i=0;i<depth;i++){
             for(int j=0;j<col;j++){
-                cout<<railfenceMatrix[i][j];
+                railfenceCipherText.push_back(railfenceMatrix[i][j]);
             }
         }
+    }
+    void railfenceEncryptionValue(){
+        cout << "\nRAILFENCE CIPHER ENCRYPTION VALUE" << endl;
+        cout<<railfenceCipherText<<endl;
     }
     ~RailFence(){}
 };
@@ -116,6 +120,11 @@ public:
         generateKey();
         subStringCalculations();
         playfairEncryption();
+        playfairEncryptionValue();
+    }
+    void playfairEncryptionValue(){
+        cout << "\nPLAYFAIR CIPHER ENCRYPTION VALUE" << endl;
+        cout<<playfairCipherText<<endl;
     }
     void subStringCalculations(){
         int count, changed = 0;
@@ -152,6 +161,10 @@ public:
         for(int i=1;i<=subStrings;i++){
             fChar = playfairStr[(2*i)-2];
             sChar = playfairStr[(2*i)-1];
+
+            if(fChar>='A' && fChar<='Z') fChar = (int)fChar+32;
+            if(sChar>='A' && sChar<='Z') sChar = (int)sChar+32;
+
             if(fChar=='j') fChar = 'i';
             if(sChar=='j') sChar = 'j';
 
@@ -188,8 +201,8 @@ public:
             playfairCipherText.push_back(fChar);
             playfairCipherText.push_back(sChar);
         }
-        cout<<endl<<playfairCipherText;
     }
+    ~PlayFair(){}
 };
 
 int main(){
@@ -199,8 +212,8 @@ int main(){
     cout << endl
          << "INPUT STRING: " << input << endl;
 
-    // CeasarCipher cc(input);
-    // RailFence rf(input);
+    CeasarCipher cc(input);
+    RailFence rf(input);
     PlayFair pf(input);
 
     return 0;
