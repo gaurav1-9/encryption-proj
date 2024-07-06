@@ -107,7 +107,7 @@ public:
 class PlayFair : protected RawString{
 private:
     char keyMatrix[5][5];
-    string keyString = "monarchy",remainingKeyString = "bdefgiklpqstuvwxz",playfairStr;
+    string keyString = "monarchy",remainingKeyString = "bdefgiklpqstuvwxz",playfairStr,playfairCipherText;
     int subStrings;
 
 public:
@@ -130,7 +130,6 @@ public:
         }
         if(playfairStr.length()%2!=0) playfairStr.push_back('x');
         subStrings = playfairStr.length()/2;
-        cout<<playfairStr<<endl<<subStrings<<'\t'<<playfairStr.length()<<endl;
     }
 
     void generateKey(){
@@ -150,10 +149,11 @@ public:
     void playfairEncryption(){
         char fChar,sChar;
         int fCharIdx[2],sCharIdx[2];
-        string playfairCipherText;
         for(int i=1;i<=subStrings;i++){
             fChar = playfairStr[(2*i)-2];
             sChar = playfairStr[(2*i)-1];
+            if(fChar=='j') fChar = 'i';
+            if(sChar=='j') sChar = 'j';
 
             for(int i=0;i<5;i++){
                 for(int j=0;j<5;j++){
@@ -167,7 +167,7 @@ public:
                     }
                 }
             }
-            cout<<fChar<<"("<<fCharIdx[0]<<fCharIdx[1]<<"), "<<sChar<<"("<<sCharIdx[0]<<sCharIdx[1]<<")\t";
+
             if(fCharIdx[1]==sCharIdx[1]){
                 fCharIdx[0] = (fCharIdx[0]+1)%5;
                 sCharIdx[0] = (sCharIdx[0]+1)%5;
@@ -176,14 +176,17 @@ public:
                 fCharIdx[1] = (fCharIdx[1]+1)%5;
                 sCharIdx[1] = (sCharIdx[1]+1)%5;
             }
-            
+            else{
+                int temp;
+                temp = fCharIdx[1];
+                fCharIdx[1] = sCharIdx[1];
+                sCharIdx[1] = temp;
+            }
 
             fChar = keyMatrix[fCharIdx[0]][fCharIdx[1]];
             sChar = keyMatrix[sCharIdx[0]][sCharIdx[1]];
             playfairCipherText.push_back(fChar);
             playfairCipherText.push_back(sChar);
-
-            cout<<fChar<<"("<<fCharIdx[0]<<fCharIdx[1]<<"), "<<sChar<<"("<<sCharIdx[0]<<sCharIdx[1]<<")"<<endl;
         }
         cout<<endl<<playfairCipherText;
     }
