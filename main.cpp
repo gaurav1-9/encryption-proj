@@ -114,8 +114,8 @@ public:
     PlayFair(string rawString):RawString(rawString){
         spaceRemover();
         generateKey();
-        showKey();
         subStringCalculations();
+        playfairEncryption();
     }
     void subStringCalculations(){
         int count, changed = 0;
@@ -130,7 +130,7 @@ public:
         }
         if(playfairStr.length()%2!=0) playfairStr.push_back('x');
         subStrings = playfairStr.length()/2;
-        cout<<playfairStr<<endl<<subStrings;
+        cout<<playfairStr<<endl<<subStrings<<'\t'<<playfairStr.length()<<endl;
     }
 
     void generateKey(){
@@ -147,13 +147,45 @@ public:
             }
         }
     }
-    void showKey(){
-        for(int i=0;i<5;i++){
-            for(int j=0;j<5;j++){
-                cout<<keyMatrix[i][j]<<" ";
+    void playfairEncryption(){
+        char fChar,sChar;
+        int fCharIdx[2],sCharIdx[2];
+        string playfairCipherText;
+        for(int i=1;i<=subStrings;i++){
+            fChar = playfairStr[(2*i)-2];
+            sChar = playfairStr[(2*i)-1];
+
+            for(int i=0;i<5;i++){
+                for(int j=0;j<5;j++){
+                    if(keyMatrix[i][j]==fChar) {
+                        fCharIdx[0] = i;
+                        fCharIdx[1] = j;
+                    }
+                    if(keyMatrix[i][j]==sChar) {
+                        sCharIdx[0] = i;
+                        sCharIdx[1] = j;
+                    }
+                }
             }
-            cout<<endl;
+            cout<<fChar<<"("<<fCharIdx[0]<<fCharIdx[1]<<"), "<<sChar<<"("<<sCharIdx[0]<<sCharIdx[1]<<")\t";
+            if(fCharIdx[1]==sCharIdx[1]){
+                fCharIdx[0] = (fCharIdx[0]+1)%5;
+                sCharIdx[0] = (sCharIdx[0]+1)%5;
+            }
+            else if(fCharIdx[0]==sCharIdx[0]){
+                fCharIdx[1] = (fCharIdx[1]+1)%5;
+                sCharIdx[1] = (sCharIdx[1]+1)%5;
+            }
+            
+
+            fChar = keyMatrix[fCharIdx[0]][fCharIdx[1]];
+            sChar = keyMatrix[sCharIdx[0]][sCharIdx[1]];
+            playfairCipherText.push_back(fChar);
+            playfairCipherText.push_back(sChar);
+
+            cout<<fChar<<"("<<fCharIdx[0]<<fCharIdx[1]<<"), "<<sChar<<"("<<sCharIdx[0]<<sCharIdx[1]<<")"<<endl;
         }
+        cout<<endl<<playfairCipherText;
     }
 };
 
